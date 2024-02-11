@@ -1,204 +1,254 @@
 ---
-import Icon from './Icon.astro';
-import ThemeToggle from './ThemeToggle.astro';
-import type { iconPaths } from './IconPaths';
+import Icon from "./Icon.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import type { iconPaths } from "./IconPaths";
+import { Image } from "astro:assets";
+import logo from "../images/starr-designs-logo.svg";
 
 /** Main menu items */
 const textLinks: { label: string; href: string }[] = [
-	{ label: 'Home', href: '/' },
-	{ label: 'Printing Services', href: '/services/' },
-	{ label: 'About', href: '/about/' },
+  { label: "Home", href: "/" },
+  { label: "Printing Services", href: "/services/" },
+  { label: "About", href: "/about/" },
 ];
-
 ---
 
-<nav>
-	<div class="menu-header">
-		<a href="/" class="site-title">
-
-			Starr Designs
-		</a>
-
-		<ul class="nav-items">
-			{
-				textLinks.map(({ label, href }) => (
-					<li>
-						<a
-							aria-current={Astro.url.pathname === href}
-							class:list={[
-								'link',
-								{
-									active:
-										Astro.url.pathname === href ||
-										(href !== '/' && Astro.url.pathname.startsWith(href)),
-								},
-							]}
-							href={href}
-						>
-							{label}
-						</a>
-					</li>
-				))
-			}
-		</ul>
-
-	<div id="menu-content" hidden>
-		<ul class="nav-items">
-			{
-				textLinks.map(({ label, href }) => (
-					<li>
-						<a
-							aria-current={Astro.url.pathname === href}
-							class:list={[
-								'link',
-								{
-									active:
-										Astro.url.pathname === href ||
-										(href !== '/' && Astro.url.pathname.startsWith(href)),
-								},
-							]}
-							href={href}
-						>
-							{label}
-						</a>
-					</li>
-				))
-			}
-		</ul>
-	</div>
+<nav id="top">
+  <div class="menu-header">
+    <a href="/" class="site-title">
+      <Image src={logo} width={48} alt="" />
+      Starr Designs
+    </a>
+    <menu-button>
+      <template>
+        <button class="menu-button" aria-expanded="false">
+          <span class="sr-only">Menu</span>
+          <Icon icon="list" />
+        </button>
+      </template>
+    </menu-button>
+  </div>
+  <noscript>
+    <ul class="nav-items">
+      {
+        textLinks.map(({ label, href }) => (
+          <li>
+            <a
+              aria-current={Astro.url.pathname === href}
+              class:list={[
+                "link",
+                {
+                  active:
+                    Astro.url.pathname === href ||
+                    (href !== "/" && Astro.url.pathname.startsWith(href)),
+                },
+              ]}
+              href={href}
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </noscript>
+  <div id="menu-content" hidden>
+    <ul class="nav-items">
+      {
+        textLinks.map(({ label, href }) => (
+          <li>
+            <a
+              aria-current={Astro.url.pathname === href}
+              class:list={[
+                "link",
+                {
+                  active:
+                    Astro.url.pathname === href ||
+                    (href !== "/" && Astro.url.pathname.startsWith(href)),
+                },
+              ]}
+              href={href}
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </nav>
+
+<script>
+  class MenuButton extends HTMLElement {
+    constructor() {
+      super();
+
+      // Inject menu toggle button when JS runs.
+      this.appendChild(this.querySelector("template")!.content.cloneNode(true));
+      const btn = this.querySelector("button")!;
+
+      // Hide menu (shown by default to support no-JS browsers).
+      const menu = document.getElementById("menu-content")!;
+      menu.hidden = true;
+      // Add "menu-content" class in JS to avoid covering content in non-JS browsers.
+      menu.classList.add("menu-content");
+
+      /** Set whether the menu is currently expanded or collapsed. */
+      const setExpanded = (expand: boolean) => {
+        btn.setAttribute("aria-expanded", expand ? "true" : "false");
+        menu.hidden = !expand;
+      };
+
+      // Toggle menu visibility when the menu button is clicked.
+      btn.addEventListener("click", () => setExpanded(menu.hidden));
+
+      // Hide menu button for large screens.
+      const handleViewports = (e: MediaQueryList | MediaQueryListEvent) => {
+        setExpanded(e.matches);
+        btn.hidden = e.matches;
+      };
+      const mediaQueries = window.matchMedia("(min-width: 50em)");
+      handleViewports(mediaQueries);
+      mediaQueries.addEventListener("change", handleViewports);
+    }
+  }
+  customElements.define("menu-button", MenuButton);
+</script>
+
 <style>
-	nav {
-		z-index: 9999;
-		position: relative;
-		font-family: var(--font-brand);
-		font-weight: 500;
-		margin-bottom: 3.5rem;
-		background-color: var(--background-color);
-	}
+  nav {
+    z-index: 9999;
+    position: relative;
+    font-family: var(--font-brand);
+    font-weight: 500;
+    margin-bottom: 3.5rem;
+    background-color: var(--background-color);
+  }
 
-	.menu-header {
-		display: flex;
-		justify-content: space-between;
-		gap: 0.5rem;
-		padding: 1.5rem;
-	}
+  .menu-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 1.5rem;
+  }
 
-	.site-title {
-		display: flex;
-		gap: 0.5rem;
-		align-items: center;
-		line-height: 1.1;
-		color: var(--pop-color);
-		text-decoration: none;
-	}
+  .site-title {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    line-height: 1.1;
+    color: var(--pop-color);
+    text-decoration: none;
+    background-color: #ffffff;
+    padding: 16px 24px;
+    border-radius: 1000vw;
+  }
 
-	.menu-button {
-		position: relative;
-		display: flex;
-		border: 0;
-		border-radius: 999rem;
-		padding: 0.5rem;
-		font-size: 1.5rem;
-		color: var(--gray-300);
-		background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-		box-shadow: var(--shadow-md);
-	}
+  .menu-button {
+    position: relative;
+    display: flex;
+    border: 0;
+    border-radius: 999rem;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    color: var(--gray-300);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    box-shadow: var(--shadow-md);
+  }
 
-	.menu-button[aria-expanded='true'] {
-		color: var(--gray-0);
-		background: linear-gradient(180deg, var(--gray-600), transparent),
-			radial-gradient(var(--gray-900), var(--gray-800) 150%);
-	}
+  .menu-button[aria-expanded="true"] {
+    color: var(--gray-0);
+    background: linear-gradient(180deg, var(--gray-600), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+  }
 
-	.menu-button[hidden] {
-		display: none;
-	}
+  .menu-button[hidden] {
+    display: none;
+  }
 
-	.menu-button::before {
-		position: absolute;
-		inset: -1px;
-		content: '';
-		background: var(--gradient-stroke);
-		border-radius: 999rem;
-		z-index: -1;
-	}
+  .menu-button::before {
+    position: absolute;
+    inset: -1px;
+    content: "";
+    background: var(--gradient-stroke);
+    border-radius: 999rem;
+    z-index: -1;
+  }
 
-	.menu-content {
-		position: absolute;
-		left: 0;
-		right: 0;
-	}
+  .menu-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
 
-	.nav-items {
-		margin: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		font-size: var(--text-md);
-		line-height: 1.2;
-		list-style: none;
-		padding: 2rem;
-		border-bottom: 1px solid var(--gray-800);
-	}
+  .nav-items {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: var(--text-md);
+    line-height: 1.2;
+    list-style: none;
+    padding: 2rem;
+    border-bottom: 1px solid var(--gray-800);
+  }
 
-	.link {
-		display: inline-block;
-		color: var(--gray-300);
-		text-decoration: none;
-	}
+  .link {
+    display: inline-block;
+    color: var(--gray-300);
+    text-decoration: none;
+  }
 
-	.link.active {
-		color: var(--gray-0);
-	}
+  .link.active {
+    color: var(--gray-0);
+  }
 
+  @media (min-width: 50em) {
+    nav {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 16px 72px;
+      gap: 16px;
+    }
 
-	@media (min-width: 50em) {
-		nav {
-			display: grid;
-			grid-template-columns: 1fr auto;
-			align-items: center;
-			padding: 2.5rem 5rem;
-			gap: 1rem;
-		}
+    .menu-header {
+      padding: 0;
+    }
 
-		.menu-header {
-			padding: 0;
-		}
+    .site-title {
+      font-size: var(--text-2xl);
+    }
 
-		.site-title {
-			font-size: var(--text-lg);
-		}
+    .menu-content {
+      display: contents;
+    }
 
-		.menu-content {
-			display: contents;
-		}
+    .nav-items {
+      position: relative;
+      flex-direction: row;
+      font-size: var(--text-sm);
+      border: 0;
+      padding: 0.5rem 0.5625rem;
+    }
 
-		.nav-items {
-			position: relative;
-			flex-direction: row;
-			font-size: var(--text-sm);
-			border: 0;
-			padding: 0.5rem 0.5625rem;
-		}
+    .link {
+      padding: 0.5rem 1rem;
+      border-radius: 999rem;
+      transition:
+        color var(--theme-transition),
+        background-color var(--theme-transition);
+    }
 
-		.link {
-			padding: 0.5rem 1rem;
-			border-radius: 999rem;
-			transition:
-				color var(--theme-transition),
-				background-color var(--theme-transition);
-		}
+    .link:hover,
+    .link:focus {
+      color: var(--gray-100);
+      background-color: var(--accent-subtle-overlay);
+    }
 
-		.link:hover,
-		.link:focus {
-			color: var(--gray-100);
-			background-color: var(--accent-subtle-overlay);
-		}
-
-		.link.active {
-			color: var(--accent-text-over);
-			background-color: var(--accent-regular);
-		}
-	}
+    .link.active {
+      color: var(--accent-text-over);
+      background-color: var(--accent-regular);
+    }
+  }
 </style>
