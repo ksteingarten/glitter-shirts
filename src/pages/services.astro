@@ -1,21 +1,25 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-import ContactCTA from '../components/ContactCTA.astro';
-import Hero from '../components/Hero.astro';
-import Grid from '../components/Grid.astro';
-
-
+import ContactCTA from "../components/ContactCTA.astro";
+import Hero from "../components/Hero.astro";
+import Grid from "../components/Grid.astro";
 ---
 
 <BaseLayout
-	title="Printing Services | Starr Designs"
-	description="Learn about Starr Designs' custom apparel printing services"
+  title="Printing Services | Starr Designs"
+  description="Learn about Starr Designs' custom apparel printing services"
 >
-	<div class="stack gap-20">
-		<main class="wrapper stack gap-8">
-
-		</main>
-		<ContactCTA />
-	</div>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-8">
+      <Hero><span slot="title">Our Services</span></Hero>
+    </main>
+    <ContactCTA />
+  </div>
 </BaseLayout>
+
+<style>
+  main {
+    padding-block-start: 56px;
+  }
+</style>

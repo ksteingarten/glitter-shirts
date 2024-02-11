@@ -1,0 +1,159 @@
+---
+const stars = [
+  ["red", "red", "orange", "orange", "yellow", "yellow", "green"],
+  ["red", "orange", "orange", "yellow", "yellow", "green", "green"],
+  ["red", "orange", "orange", "yellow", "yellow", "green", "green"],
+  ["orange", "orange", "yellow", "yellow", "green", "green", "blue"],
+  ["orange", "orange", "yellow", "yellow", "green", "green", "blue"],
+  ["orange", "yellow", "yellow", "green", "green", "blue", "blue"],
+  ["orange", "yellow", "yellow", "green", "green", "blue", "blue"],
+  ["yellow", "yellow", "green", "green", "blue", "blue", "purple"],
+  ["yellow", "yellow", "green", "green", "blue", "blue", "purple"],
+  ["yellow", "green", "green", "blue", "blue", "purple", "purple"],
+];
+---
+
+<div class="grid">
+  {
+    stars[0].map((color) => (
+      <div class="cell">
+        <div class:list={[color, "star"]} />
+      </div>
+    ))
+  }
+  {
+    stars[1].map((color, i) => (
+      <div class:list={["cell", { offset: i === 0 }]}>
+        <div class:list={[color, "star"]} />
+      </div>
+    ))
+  }
+  {
+    stars[2].map((color) => (
+      <div class="cell">
+        <div class:list={[color, "star"]} />
+      </div>
+    ))
+  }
+  {
+    stars[3].map((color, i) => (
+      <div class:list={["cell", { offset: i === 0 }]}>
+        <div class:list={[color, "star"]} />
+      </div>
+    ))
+  }
+  {
+    stars[4].map((color) => (
+      <div class="cell">
+        <div class:list={[color, "star"]} />
+      </div>
+    ))
+  }
+  {
+    stars[5].map((color, i) => (
+      <div class:list={["cell", { offset: i === 0 }]}>
+        <div class:list={[color, "star"]} />
+      </div>
+    ))
+  }
+  {
+    stars[6].map((color) => (
+      <div class="cell">
+        <div class:list={[color, "star"]} />
+      </div>
+    ))
+  }
+  {
+    stars[7].map((color, i) => (
+      <div class:list={["cell", { offset: i === 0 }]}>
+        <div class:list={[color, "star"]} />
+      </div>
+    ))
+  }
+  {
+    stars[8].map((color) => (
+      <div class="cell">
+        <div class:list={[color, "star"]} />
+      </div>
+    ))
+  }
+  {
+    stars[9].map((color, i) => (
+      <div class:list={["cell", { offset: i === 0 }]}>
+        <div class:list={[color, "star"]} />
+      </div>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  @use "sass:math";
+
+  .grid {
+    position: absolute;
+    z-index: -100;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+  }
+
+  .cell {
+    grid-column: span 2;
+    position: relative;
+  }
+
+  .offset {
+    grid-column-start: 2 / span 2;
+  }
+
+  .star {
+    position: absolute;
+    aspect-ratio: 1/1;
+    clip-path: polygon(
+      50% 0%,
+      61% 35%,
+      98% 35%,
+      68% 57%,
+      79% 91%,
+      50% 70%,
+      21% 91%,
+      32% 57%,
+      2% 35%,
+      39% 35%
+    );
+  }
+
+  @for $i from 1 through 70 {
+    .cell:nth-of-type(#{$i}) .star {
+      width: math.random(3) * 20%;
+      rotate: math.random(71) * 1deg;
+      top: math.random(50) * 1%;
+      left: math.random(50) * 1%;
+    }
+  }
+
+  .red {
+    background-color: #ec1a24;
+  }
+
+  .orange {
+    background-color: #f46523;
+  }
+
+  .yellow {
+    background-color: #ffde17;
+  }
+
+  .green {
+    background-color: #01a14b;
+  }
+
+  .blue {
+    background-color: #22409a;
+  }
+
+  .purple {
+    background-color: #803d9a;
+  }
+</style>
