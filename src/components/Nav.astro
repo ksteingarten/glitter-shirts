@@ -11,6 +11,11 @@ const textLinks: { label: string; href: string }[] = [
   { label: "Printing Services", href: "/services/" },
   { label: "About", href: "/about/" },
 ];
+
+const contactHref =
+  Astro.url.pathname === "/about/"
+    ? "/#contact"
+    : `${Astro.url.pathname}#contact`;
 ---
 
 <nav id="top">
@@ -50,6 +55,7 @@ const textLinks: { label: string; href: string }[] = [
           </li>
         ))
       }
+      <li><a href={contactHref} class="contact">Contact Us</a></li>
     </ul>
   </noscript>
   <div id="menu-content" hidden>
@@ -74,6 +80,7 @@ const textLinks: { label: string; href: string }[] = [
           </li>
         ))
       }
+      <li><a href={contactHref} class="contact">Contact Us</a></li>
     </ul>
   </div>
 </nav>
@@ -121,7 +128,6 @@ const textLinks: { label: string; href: string }[] = [
     position: relative;
     font-family: var(--font-brand);
     font-weight: 500;
-    margin-bottom: 3.5rem;
     background-color: var(--background-color);
   }
 
@@ -137,10 +143,11 @@ const textLinks: { label: string; href: string }[] = [
     gap: 16px;
     align-items: center;
     line-height: 1.1;
+    font-size: var(--text-xl);
     color: var(--pop-color);
     text-decoration: none;
     background-color: #ffffff;
-    padding: 16px 24px;
+    padding: 12px 24px;
     border-radius: 1000vw;
   }
 
@@ -151,15 +158,14 @@ const textLinks: { label: string; href: string }[] = [
     border-radius: 999rem;
     padding: 0.5rem;
     font-size: 1.5rem;
-    color: var(--gray-300);
-    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-    box-shadow: var(--shadow-md);
+    color: var(--pop-color);
+    background-color: #ffffff;
+    /* box-shadow: var(--shadow-md); */
   }
 
   .menu-button[aria-expanded="true"] {
-    color: var(--gray-0);
-    background: linear-gradient(180deg, var(--gray-600), transparent),
-      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    background-color: var(--pop-color);
+    color: #ffffff;
   }
 
   .menu-button[hidden] {
@@ -170,7 +176,6 @@ const textLinks: { label: string; href: string }[] = [
     position: absolute;
     inset: -1px;
     content: "";
-    background: var(--gradient-stroke);
     border-radius: 999rem;
     z-index: -1;
   }
@@ -179,6 +184,7 @@ const textLinks: { label: string; href: string }[] = [
     position: absolute;
     left: 0;
     right: 0;
+    background-color: var(--background-color);
   }
 
   .nav-items {
@@ -189,18 +195,50 @@ const textLinks: { label: string; href: string }[] = [
     font-size: var(--text-md);
     line-height: 1.2;
     list-style: none;
-    padding: 2rem;
+    padding: 0 32px 16px;
     border-bottom: 1px solid var(--gray-800);
   }
 
   .link {
     display: inline-block;
-    color: var(--gray-300);
+    position: relative;
+    color: var(--text-color);
     text-decoration: none;
   }
 
-  .link.active {
-    color: var(--gray-0);
+  .link::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 3px;
+    background-color: var(--text-color);
+    scale: 0 1;
+  }
+
+  .link.active::before {
+    scale: 1 1;
+  }
+
+  .link:hover,
+  .link:focus {
+    color: var(--pop-color);
+  }
+
+  .link:hover::before,
+  .link:focus::before {
+    background-color: var(--pop-color);
+    scale: 1 1;
+  }
+
+  .contact {
+    padding: 0.56em 2em;
+    color: var(--accent-text-over);
+    text-decoration: none;
+    line-height: 1.1;
+    border-radius: 999rem;
+    background: var(--pop-color);
   }
 
   @media (min-width: 50em) {
@@ -217,7 +255,7 @@ const textLinks: { label: string; href: string }[] = [
     }
 
     .site-title {
-      font-size: var(--text-2xl);
+      font-size: var(--text-xl);
     }
 
     .menu-content {
@@ -227,28 +265,14 @@ const textLinks: { label: string; href: string }[] = [
     .nav-items {
       position: relative;
       flex-direction: row;
-      font-size: var(--text-sm);
+      flex-wrap: wrap;
       border: 0;
-      padding: 0.5rem 0.5625rem;
+      gap: 32px;
+      padding: 0;
     }
 
-    .link {
-      padding: 0.5rem 1rem;
-      border-radius: 999rem;
-      transition:
-        color var(--theme-transition),
-        background-color var(--theme-transition);
-    }
-
-    .link:hover,
-    .link:focus {
-      color: var(--gray-100);
-      background-color: var(--accent-subtle-overlay);
-    }
-
-    .link.active {
-      color: var(--accent-text-over);
-      background-color: var(--accent-regular);
+    .contact {
+      margin-inline-start: 32px;
     }
   }
 </style>
