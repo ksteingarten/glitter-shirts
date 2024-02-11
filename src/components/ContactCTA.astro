@@ -3,16 +3,65 @@ import CallToAction from './CallToAction.astro';
 import Icon from './Icon.astro';
 ---
 
-<aside>
-	<h2>Interested in working together?</h2>
-	<CallToAction href="mailto:me@example.com">
-		Send Me a Message
-		<Icon icon="paper-plane-tilt" size="1.2em" />
-	</CallToAction>
-</aside>
+<section id="contact">
+	<div>
+		<h2>Contact Us</h2>
+		<p></p>
+	</div>
+	<form action="https://formkeep.com/f/68784c79c305" method="post">
+		<label for="name">Name</label>
+		<input name="name" id="name" type="text" required />
+		<label for="email">Email</label>
+		<input name="email" id="email" type="email" required />
+		<label for="org">Organization</label>
+		<input name="organization" id="org" type="text"/>
+		<label for="purpose">Purpose</label>
+		<select name="purpose" id="purpose">
+			<option value="question">General Inquiry</option>
+			<option value="quote">Request a Quote</option>
+		</select>
+		<div class="quote-inputs hidden">
+			<fieldset>
+				<legend>Printing Type</legend>
+				<input name="printing" id="glitter" type="radio" value="glitter" checked />
+				<label for="glitter">Glitter Printing</label>
+				<input name="printing" id="screen-print" type="radio" value="screen-print" checked />
+				<label for="screen-print">Screen Printing</label>
+			</fieldset>
+			<label for="quantity">Number of Shirts</label>
+			<input name="quantity" id="quantity" type="number" />
+			<fieldset>
+				<legend>Design</legend>
+				<input name="design" id="customer" type="radio" value="customer-image" checked />
+				<label for="customer">I have a design</label>
+				<input name="design" id="existing" type="radio" value="existing-image" />
+				<label for="existing">I will use an existing Starr Designs design</label>
+				<input name="design" id="custom" type="radio" value="image-needed" checked />
+				<label for="custom">Help me create a design</label>
+			</fieldset>
+		</div>
+		<label for="message">Message</label>
+		<textarea name="message" id="message" />
+		<button type="submit">Send</button>
+	</form>
+</section>
+
+<script>
+	const purpose = document.querySelector("#purpose");
+	const quoteInputs = document.querySelector(".quote-inputs");
+
+	purpose?.addEventListener("change", (e) => {
+		const value = (e.currentTarget as HTMLSelectElement).value;
+		if (value === "quote") {
+			quoteInputs?.classList.remove("hidden");
+		} else {
+			quoteInputs?.classList.add("hidden");
+		}
+	})
+</script>
 
 <style>
-	aside {
+	section {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -30,8 +79,12 @@ import Icon from './Icon.astro';
 		max-width: 15ch;
 	}
 
+	.hidden {
+		display: none;
+	}
+
 	@media (min-width: 50em) {
-		aside {
+		section {
 			padding: 7.5rem;
 			flex-direction: row;
 			flex-wrap: wrap;
