@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 403.84 403.84">
+  <polygon id="star-segment" points="201.92 201.92 242.93 102.92 201.92 3.92 160.91 102.92 201.92 201.92" fill="#784212" stroke="#000" stroke-miterlimit="10" stroke-width="3"/>
+  <polygon id="star-segment-2" data-name="star-segment" points="201.92 399.92 242.93 300.92 201.92 201.92 160.91 300.92 201.92 399.92" fill="#01a14b" stroke="#000" stroke-miterlimit="10" stroke-width="3"/>
+  <polygon id="star-segment-3" data-name="star-segment" points="399.92 201.92 300.92 160.91 201.92 201.92 300.92 242.93 399.92 201.92" fill="#f46523" stroke="#000" stroke-miterlimit="10" stroke-width="3"/>
+  <polygon id="star-segment-4" data-name="star-segment" points="201.92 201.92 102.92 160.91 3.92 201.92 102.92 242.93 201.92 201.92" fill="#803d9a" stroke="#000" stroke-miterlimit="10" stroke-width="3"/>
+  <polygon id="star-segment-5" data-name="star-segment" points="201.92 201.92 160.92 102.92 61.92 61.92 102.92 160.92 201.92 201.92" stroke="#000" stroke-miterlimit="10" stroke-width="3"/>
+  <polygon id="star-segment-6" data-name="star-segment" points="341.92 341.92 300.92 242.92 201.92 201.92 242.92 300.92 341.92 341.92" fill="#ffde17" stroke="#000" stroke-miterlimit="10" stroke-width="3"/>
+  <polygon id="star-segment-7" data-name="star-segment" points="201.92 201.92 102.92 242.92 61.92 341.92 160.92 300.92 201.92 201.92" fill="#22409a" stroke="#000" stroke-miterlimit="10" stroke-width="3"/>
+  <polygon id="star-segment-8" data-name="star-segment" points="341.92 61.92 242.92 102.92 201.92 201.92 300.92 160.92 341.92 61.92" fill="#ec1a24" stroke="#000" stroke-miterlimit="10" stroke-width="3"/>
+</svg>
