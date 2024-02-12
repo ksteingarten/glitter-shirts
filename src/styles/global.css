@@ -1,10 +1,11 @@
 /* Global variables */
 :root {
+--content-width: calc(100% - 32px);
+
   /* Colors */
   --background-color: hsl(0, 100%, 94%);
   --background-raw-hsl: 0 100% 94%;
   --pop-color: hsl(211, 72%, 37%);
-  --text-color: hsl(211, 80%, 18%);
   --text-color: hsl(211, 68%, 23%);
 
   --gray-0: #090b11;
@@ -22,31 +23,6 @@
   --gray-999_40: hsla(var(--gray-999-basis), 0.4);
   --gray-999: #ffffff;
 
-  --accent-text-over: var(--gray-999);
-
-  --link-color: var(--accent-regular);
-
-  /* Gradients */
-  --gradient-stop-1: var(--accent-light);
-  --gradient-stop-2: var(--accent-regular);
-  --gradient-stop-3: var(--accent-dark);
-  --gradient-subtle: linear-gradient(
-    150deg,
-    var(--gray-900) 19%,
-    var(--gray-999) 150%
-  );
-  --gradient-accent: linear-gradient(
-    150deg,
-    var(--gradient-stop-1),
-    var(--gradient-stop-2),
-    var(--gradient-stop-3)
-  );
-  --gradient-accent-orange: linear-gradient(
-    150deg,
-    #ca7879,
-    var(--accent-regular),
-    var(--accent-dark)
-  );
   --gradient-stroke: linear-gradient(180deg, var(--gray-900), var(--gray-700));
 
   /* Shadows */
@@ -108,7 +84,7 @@ img {
 }
 
 a {
-  color: var(--link-color);
+  color: var(--gray-999);
 }
 
 h1,
@@ -158,7 +134,7 @@ h5 {
 
 .wrapper {
   width: 100%;
-  max-width: 83rem;
+  max-width: var(--content-width);
   margin-inline: auto;
   padding-inline: 1.5rem;
 }
@@ -193,7 +169,11 @@ h5 {
   gap: 12rem;
 }
 
-@media (min-width: 50em) {
+@media (min-width: 57rem) {
+  :root {
+    --content-width: 1280px;
+  }
+
   .lg\:gap-2 {
     gap: 0.5rem;
   }
