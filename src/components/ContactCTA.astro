@@ -1,136 +1,470 @@
 ---
 import CallToAction from "./CallToAction.astro";
+import Card from "./Card.astro";
 import Icon from "./Icon.astro";
+
+interface Props {
+  title?: string;
+  quote?: boolean;
+}
+
+const { quote, title = "Get in Touch" } = Astro.props;
 ---
 
 <section id="contact">
-  <div>
-    <h2>Contact Us</h2>
-    <p></p>
-  </div>
-  <form action="https://formkeep.com/f/68784c79c305" method="post">
-    <label for="name">Name</label>
-    <input name="name" id="name" type="text" required />
-    <label for="email">Email</label>
-    <input name="email" id="email" type="email" required />
-    <label for="org">Organization</label>
-    <input name="organization" id="org" type="text" />
-    <label for="purpose">Purpose</label>
-    <select name="purpose" id="purpose">
-      <option value="question">General Inquiry</option>
-      <option value="quote">Request a Quote</option>
-    </select>
-    <div class="quote-inputs hidden">
-      <fieldset>
-        <legend>Printing Type</legend>
-        <input
-          name="printing"
-          id="glitter"
-          type="radio"
-          value="glitter"
-          checked
-        />
-        <label for="glitter">Glitter Printing</label>
-        <input
-          name="printing"
-          id="screen-print"
-          type="radio"
-          value="screen-print"
-          checked
-        />
-        <label for="screen-print">Screen Printing</label>
-      </fieldset>
-      <label for="quantity">Number of Shirts</label>
-      <input name="quantity" id="quantity" type="number" />
-      <fieldset>
-        <legend>Design</legend>
-        <input
-          name="design"
-          id="customer"
-          type="radio"
-          value="customer-image"
-          checked
-        />
-        <label for="customer">I have a design</label>
-        <input
-          name="design"
-          id="existing"
-          type="radio"
-          value="existing-image"
-        />
-        <label for="existing">I will use an existing Starr Designs design</label
-        >
-        <input
-          name="design"
-          id="custom"
-          type="radio"
-          value="image-needed"
-          checked
-        />
-        <label for="custom">Help me create a design</label>
-      </fieldset>
+  <Card alignTop="left" alignAuto="right" centerVertically={false}>
+    <div class="text-wrapper stack gap-4 lg:gap-8" slot="top">
+      <h2>{title}</h2>
+      <div class="text">
+        <slot />
+      </div>
     </div>
-    <label for="message">Message</label>
-    <textarea name="message" id="message"></textarea>
-    <button type="submit">Send</button>
-  </form>
+    <form
+      class="gap-2 lg:gap-4"
+      slot="bottom"
+      action="https://formkeep.com/f/68784c79c305"
+      method="post"
+    >
+      <h3>Contact Us</h3>
+
+      <label for="name">Name: *</label>
+      <input name="name" id="name" type="text" required />
+      <label for="email">Email: *</label>
+      <input name="email" id="email" type="email" required />
+      <label for="tel">Phone:</label>
+      <input name="tel" id="tel" type="tel" />
+      <fieldset>
+        <legend>Preferred Contact Method:</legend>
+        <label for="contact-email">
+          <input
+            name="preferred-contact"
+            id="contact-email"
+            type="radio"
+            value="email"
+            checked
+          />
+          Email</label
+        >
+        <label for="contact-phone">
+          <input
+            name="preferred-contact"
+            id="contact-phone"
+            type="radio"
+            value="phone"
+          />
+          Phone</label
+        >
+      </fieldset>
+      <label for="org">Organization:</label>
+      <input name="organization" id="org" type="text" />
+      <label for="purpose">Purpose:</label>
+      <select name="purpose" id="purpose">
+        {quote && <option value="quote">Request a Quote</option>}
+        <option value="question">General Inquiry</option>
+        {!quote && <option value="quote">Request a Quote</option>}
+      </select>
+      <div
+        class:list={["quote-inputs", "gap-2", "lg:gap-4", { hidden: !quote }]}
+      >
+        <fieldset>
+          <legend>Printing Type:</legend>
+          <label for="glitter">
+            <input
+              name="printing"
+              id="glitter"
+              type="radio"
+              value="glitter"
+              checked
+            />
+            Glitter Printing</label
+          >
+          <label for="screen-print">
+            <input
+              name="printing"
+              id="screen-print"
+              type="radio"
+              value="screen-print"
+            />
+            Screen Printing</label
+          >
+        </fieldset>
+        <label for="quantity">Number of Shirts:</label>
+        <input name="quantity" id="quantity" type="number" />
+        <fieldset>
+          <legend>Design:</legend>
+          <label for="customer">
+            <input
+              name="design"
+              id="customer"
+              type="radio"
+              value="customer-image"
+              checked
+            />
+            I have a design</label
+          >
+          <label for="existing">
+            <input
+              name="design"
+              id="existing"
+              type="radio"
+              value="existing-image"
+            />
+            I will use an existing Starr Designs design</label
+          >
+          <label for="custom">
+            <input
+              name="design"
+              id="custom"
+              type="radio"
+              value="image-needed"
+            />
+            Help me create a design</label
+          >
+        </fieldset>
+      </div>
+      <div class="message">
+        <label for="message">Message:</label>
+        <textarea name="message" id="message" rows="5"></textarea>
+      </div>
+      <button type="submit">Send</button>
+    </form>
+  </Card>
 </section>
+<!-- <section id="contact">
+  <Card imgAlign="right">
+    <div slot="left">
+      <h2>{title}</h2>
+      {tagline && <p>{tagline}</p>}
+    </div>
+    <form
+      class="stack gap-2 lg:gap-4"
+      slot="right"
+      action="https://formkeep.com/f/68784c79c305"
+      method="post"
+    >
+      <h3>Contact Us</h3>
+      <div class="form-group">
+        <label for="name">Name: *</label>
+        <input name="name" id="name" type="text" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email: *</label>
+        <input name="email" id="email" type="email" required />
+      </div>
+      <div class="form-group">
+        <label for="tel">Phone:</label>
+        <input name="tel" id="tel" type="tel" />
+      </div>
+      <div class="form-group">
+        <fieldset>
+          <legend>Preferred Contact Method:</legend>
+          <label for="contact-email">
+            <input
+              name="preferred-contact"
+              id="contact-email"
+              type="radio"
+              value="email"
+              checked
+            />
+            Email</label
+          >
+          <label for="contact-phone">
+            <input
+              name="preferred-contact"
+              id="contact-phone"
+              type="radio"
+              value="phone"
+            />
+            Phone</label
+          >
+        </fieldset>
+      </div>
+      <div class="form-group">
+        <label for="org">Organization:</label>
+        <input name="organization" id="org" type="text" />
+      </div>
+      <div class="form-group">
+        <label for="purpose">Purpose:</label>
+        <select name="purpose" id="purpose">
+          {quote && <option value="quote">Request a Quote</option>}
+          <option value="question">General Inquiry</option>
+          {!quote && <option value="quote">Request a Quote</option>}
+        </select>
+      </div>
+      <div
+        class:list={[
+          "quote-inputs",
+          "stack",
+          "gap-2",
+          "lg:gap-4",
+          { hidden: !quote },
+        ]}
+      >
+        <div class="form-group">
+          <fieldset>
+            <legend>Printing Type:</legend>
+            <label for="glitter">
+              <input
+                name="printing"
+                id="glitter"
+                type="radio"
+                value="glitter"
+                checked
+              />
+              Glitter Printing</label
+            >
+            <label for="screen-print">
+              <input
+                name="printing"
+                id="screen-print"
+                type="radio"
+                value="screen-print"
+              />
+              Screen Printing</label
+            >
+          </fieldset>
+        </div>
+        <div class="form-group">
+          <label for="quantity">Number of Shirts:</label>
+          <input name="quantity" id="quantity" type="number" />
+        </div>
+        <div class="form-group">
+          <fieldset>
+            <legend>Design:</legend>
+            <label for="customer">
+              <input
+                name="design"
+                id="customer"
+                type="radio"
+                value="customer-image"
+                checked
+              />
+              I have a design</label
+            >
+            <label for="existing">
+              <input
+                name="design"
+                id="existing"
+                type="radio"
+                value="existing-image"
+              />
+              I will use an existing Starr Designs design</label
+            >
+            <label for="custom">
+              <input
+                name="design"
+                id="custom"
+                type="radio"
+                value="image-needed"
+              />
+              Help me create a design</label
+            >
+          </fieldset>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea name="message" id="message" rows="5"></textarea>
+      </div>
+      <button type="submit">Send</button>
+    </form>
+  </Card>
+</section> -->
 
 <script>
   const purpose = document.querySelector("#purpose");
   const quoteInputs = document.querySelector(".quote-inputs");
 
-  purpose?.addEventListener("change", (e) => {
-    const value = (e.currentTarget as HTMLSelectElement).value;
+  const purposeHandler = () => {
+    if (!purpose || !(purpose as HTMLSelectElement).value) {
+      return;
+    }
+    const value = (purpose as HTMLSelectElement).value;
     if (value === "quote") {
       quoteInputs?.classList.remove("hidden");
     } else {
       quoteInputs?.classList.add("hidden");
     }
-  });
+  };
+
+  window?.addEventListener("load", purposeHandler);
+  purpose?.addEventListener("change", purposeHandler);
 </script>
 
 <style>
   section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
+    padding-block: 48px 24px;
     border-top: 1px solid var(--gray-800);
     border-bottom: 1px solid var(--gray-800);
-    padding: 5rem 1.5rem;
-    background-color: var(--gray-999_40);
+    background-color: var(--gray-999);
     box-shadow: var(--shadow-sm);
   }
 
   h2 {
+    font-size: var(--text-2xl);
+    max-width: 50ch;
+  }
+
+  .text-wrapper {
+    justify-self: center;
+    max-width: var(--content-width);
+  }
+
+  .text {
+    font-size: var(--text-lg);
+  }
+
+  h3 {
+    grid-column: 1 / -1;
     font-size: var(--text-xl);
-    text-align: center;
-    max-width: 15ch;
+    color: var(--gray-999);
+    margin-block-end: 16px;
+  }
+
+  form {
+    background-color: var(--pop-color);
+    color: var(--gray-999);
+    border-radius: 32px;
+    padding: 24px;
+    max-width: 600px;
+    font-size: var(--text-lg);
+    justify-self: center;
+  }
+
+  form {
+    display: grid;
+  }
+
+  .quote-inputs {
+    display: contents;
   }
 
   .hidden {
     display: none;
   }
 
+  .message {
+    grid-column: 1/ -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    grid-template-columns: auto 1fr;
+  }
+
+  form button {
+    grid-column: 1 / -1;
+    justify-self: end;
+    background-color: var(--gray-999);
+    color: var(--text-color);
+    font: inherit;
+    font-size: var(--text-md);
+    border: none;
+    border-radius: 1000vw;
+    padding: 0.56em 2em;
+    line-height: 1.1;
+    box-shadow: var(--shadow-md);
+    margin-block-start: 4px;
+  }
+
+  /* .form-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+  } */
+
   fieldset {
+    grid-column: 1 / -1;
     border: none;
     display: flex;
     flex-wrap: wrap;
     padding: 0;
   }
 
-  @media (min-width: 57rem) {
+  fieldset label {
+    margin-inline-start: 24px;
+  }
+  fieldset input {
+    margin-inline-end: 4px;
+    outline-color: var(--background-color);
+    outline-offset: 4px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  textarea,
+  select {
+    border-radius: 8px;
+    padding: 4px 8px;
+    min-width: 10ch;
+    align-self: self-start;
+  }
+
+  input[type="number"] {
+    width: 10ch;
+  }
+
+  textarea {
+    flex-basis: 399px;
+  }
+
+  select {
+    background-color: var(--gray-999);
+    font: inherit;
+    font-size: var(--text-md);
+  }
+
+  @media (min-width: 27rem) {
+    form {
+      grid-template-columns: auto 1fr;
+    }
+
+    form > label,
+    .quote-inputs > label {
+      grid-column: 1 / 2;
+      /* justify-self: start; */
+    }
+
+    .message {
+      grid-column: 1/ -1;
+    }
+
+    form > input {
+      grid-column: 2 / 3;
+    }
+  }
+
+  @media (min-width: 62rem) {
+    .text-wrapper {
+      padding-block-start: 60px;
+      justify-self: unset;
+    }
+
     section {
-      padding: 7.5rem;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      padding-block: 72px;
+    }
+
+    form {
+      border-radius: 48px;
+      padding: 48px;
+      justify-self: unset;
+      width: 600px;
     }
 
     h2 {
-      font-size: var(--text-3xl);
+      font-size: var(--text-4xl);
       text-align: left;
+    }
+
+    h3 {
+      font-size: var(--text-3xl);
+    }
+
+    .text {
+      font-size: var(--text-xl);
     }
   }
 </style>

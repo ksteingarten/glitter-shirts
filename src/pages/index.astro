@@ -17,6 +17,7 @@ import ContactCTA from "../components/ContactCTA.astro";
 // Image Imports
 import excitedGroup from "../images/group_excited_cropped.jpg";
 import stairs3 from "../images/stairs_3.jpg";
+import qChoir from "../images/qchoirshirts.jpg";
 ---
 
 <BaseLayout>
@@ -31,10 +32,7 @@ import stairs3 from "../images/stairs_3.jpg";
           >
             <span slot="title"><nobr>T-shirts</nobr> that sparkle</span>
             <div class="cta">
-              <CallToAction href="/#contact">
-                Get A Quote
-                <!-- <Icon icon="arrow-right" size="1.2em" /> -->
-              </CallToAction>
+              <CallToAction href="/#contact">Get A Quote</CallToAction>
             </div>
           </Hero>
           <Image
@@ -46,24 +44,19 @@ import stairs3 from "../images/stairs_3.jpg";
       </div>
     </header>
 
-    <main class="stack">
-      <section class="with-background">
-        <Card imgAlign="left">
-          <Image
-            class="vertical-img"
-            slot="left"
-            width={400}
-            src={stairs3}
-            alt="Three people seated on concrete stairs. The person at the top wears a teal tank top glitter printed with a Progress Pride flag in the shape of a heart. The person in the middle wears a black t-shirt glitter printed with a genderqueer flag in the shape of an anatomical heart. The person at the bottom wears a purple tank top glitter printed with a pansexual flag in the shape of an anatomical heart."
-          />
-          <div class="section-text" slot="right">
+    <main class="stack gap-10 lg:gap-15">
+      <section>
+        <Card alignTop="left" alignAuto="right">
+          <div class="section-text" slot="top">
             <div class="section-header stack gap-2 lg:gap-4">
               <h3>Add glitter to any image</h3>
-              <p>
-                Choose one of our existing designs, provide your own, or work
-                with us to develop the perfect design.
-              </p>
-              <p>Great for:</p>
+              <div class="stack gap-2 lg:gap-4">
+                <p>
+                  Choose one of our existing designs, provide your own, or work
+                  with us to develop the perfect design.
+                </p>
+                <p>Great for:</p>
+              </div>
             </div>
             <div class="gallery">
               <Grid variant="small">
@@ -77,11 +70,18 @@ import stairs3 from "../images/stairs_3.jpg";
               </Grid>
             </div>
           </div>
+          <Image
+            class="vertical-img"
+            slot="bottom"
+            width={400}
+            src={qChoir}
+            alt="Two people wearing black shirts glitter printed with the words Q Choir in purple on a music staff over a rainbow background."
+          />
         </Card>
       </section>
-      <section class="with-background">
-        <Card imgAlign="right">
-          <div class="section-text" slot="left">
+      <section>
+        <Card alignTop="right" alignAuto="left">
+          <div class="section-text" slot="top">
             <div class="section-header stack gap-2 lg:gap-4">
               <h3>Support a great cause</h3>
               <p>Partner with us for your next fundraising campaign.</p>
@@ -94,7 +94,7 @@ import stairs3 from "../images/stairs_3.jpg";
                     "Pride",
                     "Trans Day of Visibility",
                     "Solidarity Actions",
-                    "National Coming Out Day",
+                    "...and many more!",
                   ].map((campaign) => (
                     <li class="mention-card">
                       <p>{campaign}</p>
@@ -106,7 +106,7 @@ import stairs3 from "../images/stairs_3.jpg";
           </div>
           <Image
             class="vertical-img"
-            slot="right"
+            slot="bottom"
             src={stairs3}
             width={400}
             alt="Three people seated on concrete stairs. The person at the top wears a teal tank top glitter printed with a Progress Pride flag in the shape of a heart. The person in the middle wears a black t-shirt glitter printed with a genderqueer flag in the shape of an anatomical heart. The person at the bottom wears a purple tank top glitter printed with a pansexual flag in the shape of an anatomical heart."
@@ -115,7 +115,11 @@ import stairs3 from "../images/stairs_3.jpg";
       </section>
     </main>
 
-    <ContactCTA />
+    <ContactCTA>
+      <p>Have a question?</p>
+      <p>Interested in a quote?</p>
+      <p>We would love to hear from you!</p>
+    </ContactCTA>
   </div>
 </BaseLayout>
 
@@ -124,7 +128,7 @@ import stairs3 from "../images/stairs_3.jpg";
     position: relative;
   }
   .hero-wrapper {
-    padding-block: 56px;
+    padding-block: 60px;
   }
   .hero-inner-wrapper {
     display: flex;
@@ -136,10 +140,6 @@ import stairs3 from "../images/stairs_3.jpg";
     background-color: hsl(0 100% 96.5% /0.85);
   }
 
-  .roles {
-    display: none;
-  }
-
   img {
     object-fit: cover;
     object-position: top;
@@ -147,7 +147,7 @@ import stairs3 from "../images/stairs_3.jpg";
     box-shadow: var(--shadow-md);
   }
 
-  @media (min-width: 57rem) {
+  @media (min-width: 62rem) {
     .hero-wrapper {
       padding-inline: 40px;
     }
@@ -158,12 +158,6 @@ import stairs3 from "../images/stairs_3.jpg";
       border-radius: 64px;
     }
 
-    .roles {
-      margin-top: 0.5rem;
-      display: flex;
-      gap: 0.5rem;
-    }
-
     img {
       border-radius: 48px;
     }
@@ -171,13 +165,19 @@ import stairs3 from "../images/stairs_3.jpg";
 
   /* ====================================================== */
 
+  main {
+    padding-block: 32px;
+  }
+
   .vertical-img {
     aspect-ratio: 3/4;
   }
 
   .section-text {
     display: grid;
-    gap: 2rem;
+    gap: 24px;
+    max-width: 428px;
+    margin-inline: auto;
   }
 
   .with-background {
@@ -186,31 +186,31 @@ import stairs3 from "../images/stairs_3.jpg";
   }
 
   .section-header {
-    max-width: 50ch;
+    max-width: 60ch;
     font-size: var(--text-md);
+    gap: 16px;
   }
 
   .section-header h3 {
     font-size: var(--text-2xl);
   }
 
-  @media (min-width: 57rem) {
+  @media (min-width: 62rem) {
+    main {
+      padding-block: 60px;
+    }
 
+    .section-text {
+      gap: 48px;
+      max-width: 750px;
+    }
     .section-header {
       font-size: var(--text-lg);
+      gap: 32px;
     }
 
     .section-header h3 {
       font-size: var(--text-4xl);
-    }
-
-    .with-cta .section-header {
-      justify-self: flex-start;
-      text-align: left;
-    }
-
-    .cta {
-      grid-area: cta;
     }
   }
 
@@ -221,16 +221,17 @@ import stairs3 from "../images/stairs_3.jpg";
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 24px;
+    padding: 16px;
     background-color: #ffffff;
     border: 1px solid var(--gray-800);
     border-radius: 1.5rem;
     box-shadow: var(--shadow-sm);
   }
 
-  @media (min-width: 57rem) {
+  @media (min-width: 62rem) {
     .mention-card {
       border-radius: 1.5rem;
+      padding: 32px;
     }
   }
 </style>

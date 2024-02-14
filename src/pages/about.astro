@@ -1,128 +1,140 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
 
-import ContactCTA from "../components/ContactCTA.astro";
 import Hero from "../components/Hero.astro";
+import Card from "../components/Card.astro";
+
+import joshua from "../images/joshua.jpg";
 ---
 
 <BaseLayout title="About | Starr Designs" description="About Starr Designs">
-  <div class="stack gap-20">
-    <main class="wrapper about">
-      <Hero
-        tagline="Thanks for stopping by. Read below to learn more about myself and my background."
-      >
+  <div class="stack main-wrapper">
+    <main class="wrapper">
+      <Hero>
         <span slot="title">About</span>
-        <img
-          width="1553"
-          height="873"
-          src="/assets/at-work.jpg"
-          alt="Jeanine White at work with a colleague"
-        />
       </Hero>
-
       <section>
-        <h2 class="section-title">Background</h2>
-        <div class="content">
-          <p>
-            Lorem ipsum dolor sit amet, <a href="https://astro.build/">Astro</a>
-            makes people happy. Sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Proin nibh nisl condimentum id venenatis a condimentum
-            vitae. Dapibus ultrices in iaculis nunc. Arcu odio ut sem nulla pharetra
-            diam sit amet. Diam quis enim lobortis scelerisque fermentum dui faucibus
-            in ornare.
-          </p>
-          <p>
-            Arcu dui vivamus arcu felis bibendum ut tristique et egestas. Eget
-            gravida cum sociis natoque penatibus. Cras fermentum odio eu feugiat
-            pretium nibh. Proin nibh nisl condimentum id venenatis. Porta nibh
-            venenatis cras sed felis eget velit. Id diam vel quam elementum
-            pulvinar etiam non.
-          </p>
-          <p>
-            Ultrices tincidunt arcu non sodales neque sodales ut. Sed enim ut
-            sem viverra aliquet eget sit amet. Lacus luctus accumsan tortor
-            posuere ac ut consequat semper viverra. Viverra accumsan in nisl
-            nisi scelerisque eu ultrices. In massa tempor nec feugiat nisl
-            pretium fusce.
-          </p>
-        </div>
-      </section>
-      <section>
-        <h2 class="section-title">Education</h2>
-        <div class="content">
-          <p>Corporis voluptates tenetur laudantium.</p>
-        </div>
-      </section>
-      <section>
-        <h2 class="section-title">Skills</h2>
-        <div class="content">
-          <p>officia unde omnis</p>
-        </div>
+        <Card alignTop="left" alignAuto="left" centerVertically={false}>
+          <Image
+            class="vertical-img"
+            slot="top"
+            width={400}
+            src={joshua}
+            alt=""
+          />
+          <div class="section-text" slot="bottom">
+            <div class="section-header stack gap-2 lg:gap-4">
+              <p>
+                Starr Designs is owned and run by Joshua Starr. TODO: more info
+              </p>
+              <p>
+                Joshua also facilitates workshops and spaces around gender
+                inclusion and consent. More information on his facilitation work
+                can be found at <a href="https://www.joshuastarr.ca"
+                  >www.joshuastarr.ca</a
+                >.
+              </p>
+            </div>
+          </div>
+        </Card>
       </section>
     </main>
-
-    <ContactCTA />
   </div>
 </BaseLayout>
 
 <style>
-  main {
-    padding-block-start: 56px;
+  a {
+    color: currentColor;
+  }
+  a:hover,
+  a:focus-visible {
+    color: var(--pop-color);
+  }
+  .main-wrapper {
+    padding-block: 60px;
+    background-color: var(--gray-999);
   }
 
-  .about {
-    display: flex;
-    flex-direction: column;
-    gap: 3.5rem;
-  }
-
-  img {
-    margin-top: 1.5rem;
-    border-radius: 1.5rem;
-    box-shadow: var(--shadow-md);
+  .vertical-img {
+    aspect-ratio: 3/4;
   }
 
   section {
+    padding-block: 60px 32px;
+  }
+
+  .section-text {
+    display: grid;
+    gap: 24px;
+    max-width: 428px;
+    margin-inline: auto;
+  }
+
+  .section-header {
+    max-width: 60ch;
+    font-size: var(--text-md);
+    gap: 16px;
+  }
+
+  .section-header h3 {
+    font-size: var(--text-2xl);
+  }
+
+  img {
+    object-fit: cover;
+    object-position: top;
+    border-radius: 24px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .thumb {
+    width: 100px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+  }
+
+  .thumbs {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    color: var(--gray-200);
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: var(--content-width);
+    padding: 16px 0px;
+    margin-inline: auto;
   }
 
-  .section-title {
-    grid-column-start: 1;
-    font-size: var(--text-xl);
-    color: var(--gray-0);
+  .screen-thumbs {
+    justify-content: flex-end;
   }
 
-  .content {
-    grid-column: 2 / 4;
-  }
-
-  .content :global(a) {
-    text-decoration: 1px solid underline transparent;
-    text-underline-offset: 0.25em;
-    transition: text-decoration-color var(--theme-transition);
-  }
-
-  .content :global(a:hover),
-  .content :global(a:focus) {
-    text-decoration-color: currentColor;
-  }
-
-  @media (min-width: 57rem) {
-    .about {
-      display: grid;
-      grid-template-columns: 1fr 60% 1fr;
+  @media (min-width: 62rem) {
+    .cards {
+      padding-block: 60px;
     }
 
-    .about > :global(:first-child) {
-      grid-column-start: 2;
+    .section-text {
+      gap: 48px;
+      max-width: 750px;
     }
-
-    section {
-      display: contents;
+    .section-header {
       font-size: var(--text-lg);
+      gap: 32px;
+    }
+
+    .section-header h3 {
+      font-size: var(--text-4xl);
+    }
+
+    img {
+      border-radius: 48px;
+    }
+
+    .thumb {
+      border-radius: 8px;
+    }
+
+    .thumbs {
+      padding: 16px 32px;
     }
   }
 </style>

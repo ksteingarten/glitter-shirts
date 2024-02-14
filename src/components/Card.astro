@@ -1,37 +1,72 @@
 ---
 interface Props {
-  imgAlign: "left" | "right";
+  alignTop: "left" | "right";
+  alignAuto: "left" | "right";
+  centerVertically?: boolean;
 }
 
-const { imgAlign } = Astro.props;
+const { alignTop, alignAuto, centerVertically = true } = Astro.props;
 ---
 
 <div
   class:list={[
     "wrapper",
     "grid",
-    "grid-col-2",
     "gap-8",
-    "lg:gap-15",
-    { "img-left": imgAlign === "left", "img-right": imgAlign === "right" },
+    "lg:gap-20",
+    {
+      "auto-left": alignAuto === "left",
+      "auto-right": alignAuto === "right",
+      center: centerVertically,
+    },
   ]}
 >
-  <div class="left">
-    <slot name="left" />
+  <div
+    class:list={[{ left: alignTop === "left", right: alignTop === "right" }]}
+  >
+    <slot name="top" />
   </div>
-  <div class="right">
-    <slot name="right" />
+  <div
+    class:list={[{ right: alignTop === "left", left: alignTop === "right" }]}
+  >
+    <slot name="bottom" />
   </div>
 </div>
 
 <style>
   .grid {
+    display: grid;
+  }
+
+  .center {
     align-items: center;
   }
-  .left {
-    grid-area: left;
-  }
+
+  .left,
   .right {
-    grid-area: right;
+    display: grid;
+  }
+  .left > :global(img),
+  .right > :global(img) {
+    justify-self: center;
+  }
+
+  @media (min-width: 62rem) {
+    .grid.auto-left {
+      grid-template-columns: auto 1fr;
+    }
+    .grid.auto-right {
+      grid-template-columns: 1fr auto;
+    }
+    .grid {
+      padding-inline: 32px;
+      grid-template-areas: "left right";
+    }
+    .left {
+      grid-area: left;
+    }
+    .right {
+      grid-area: right;
+    }
   }
 </style>

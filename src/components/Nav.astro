@@ -114,7 +114,7 @@ const contactHref =
         setExpanded(e.matches);
         btn.hidden = e.matches;
       };
-      const mediaQueries = window.matchMedia("(min-width: 57rem)");
+      const mediaQueries = window.matchMedia("(min-width: 62rem)");
       handleViewports(mediaQueries);
       mediaQueries.addEventListener("change", handleViewports);
     }
@@ -215,11 +215,13 @@ const contactHref =
     bottom: -4px;
     height: 3px;
     background-color: var(--text-color);
-    scale: 0 1;
+    /* scale: 0 1; */
+    opacity: 0;
   }
 
   .link.active::before {
-    scale: 1 1;
+    /* scale: 1 1; */
+    opacity: 1;
   }
 
   .link:hover,
@@ -230,7 +232,15 @@ const contactHref =
   .link:hover::before,
   .link:focus::before {
     background-color: var(--pop-color);
-    scale: 1 1;
+    /* scale: 1 1; */
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .link,
+    .link::before {
+      transition: all 300ms ease-out;
+    }
   }
 
   .contact {
@@ -245,7 +255,7 @@ const contactHref =
     text-decoration: none;
   }
 
-  @media (min-width: 57rem) {
+  @media (min-width: 62rem) {
     nav {
       display: grid;
       grid-template-columns: 1fr auto;

@@ -1,7 +1,7 @@
 /* Global variables */
 :root {
   --content-width: calc(100% - 32px);
-  --break-point: 57rem;
+  --break-point: 62rem;
 
   /* Colors */
   --background-color: hsl(0, 100%, 94%);
@@ -54,8 +54,13 @@
   --font-body: "Public Sans", var(--font-system);
   --font-brand: Rubik, var(--font-system);
 
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
   /* Transitions */
   --theme-transition: 0.2s ease-in-out;
+  }
 }
 
 html,
@@ -65,7 +70,7 @@ body {
 }
 
 body {
-  background-color: var(--gray-999);
+  background-color: var(--background-color);
   color: var(--text-color);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -137,7 +142,7 @@ h5 {
   width: 100%;
   max-width: var(--content-width);
   margin-inline: auto;
-  padding-block: 56px;
+  /* padding-block: 60px; */
 }
 
 .stack {
@@ -145,48 +150,41 @@ h5 {
   flex-direction: column;
 }
 
-.grid-col-2 {
-  display: grid;
-  }
-
 .gap-2 {
-  gap: 0.5rem;
+  gap: 8px;
 }
 .gap-4 {
-  gap: 1rem;
+  gap: 16px;
 }
 .gap-8 {
-  gap: 2rem;
+  gap: 32px;
 }
 .gap-10 {
-  gap: 2.5rem;
+  gap: 40px;
+}
+.gap-12 {
+  gap: 48px;
 }
 .gap-15 {
-  gap: 3.75rem;
+  gap: 60px;
 }
 .gap-20 {
-  gap: 5rem;
+  gap: 80px;
 }
 .gap-30 {
-  gap: 7.5rem;
+  gap: 120px;
 }
 .gap-48 {
-  gap: 12rem;
+  gap: 192px;
 }
 
-@media (min-width: 57rem) {
+@media (min-width: 62rem) {
   :root {
     --content-width: 1280px;
   }
 
-  .grid-col-2.img-left {
-    grid-template-columns: auto 1fr;
-  }
-  .grid-col-2.img-right {
-    grid-template-columns: 1fr auto;
-  }
-  .grid-col-2 {
-    grid-template-areas: "left right";
+  .wrapper {
+  max-width: var(--content-width);
   }
 
   .lg\:gap-2 {
