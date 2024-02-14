@@ -1,0 +1,37 @@
+---
+interface Props {
+  imgAlign: "left" | "right";
+}
+
+const { imgAlign } = Astro.props;
+---
+
+<div
+  class:list={[
+    "wrapper",
+    "grid",
+    "grid-col-2",
+    "gap-8",
+    "lg:gap-15",
+    { "img-left": imgAlign === "left", "img-right": imgAlign === "right" },
+  ]}
+>
+  <div class="left">
+    <slot name="left" />
+  </div>
+  <div class="right">
+    <slot name="right" />
+  </div>
+</div>
+
+<style>
+  .grid {
+    align-items: center;
+  }
+  .left {
+    grid-area: left;
+  }
+  .right {
+    grid-area: right;
+  }
+</style>

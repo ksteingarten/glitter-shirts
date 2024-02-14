@@ -9,12 +9,14 @@ import Grid from "../components/Grid.astro";
 import Hero from "../components/Hero.astro";
 import HeroBackground from "../components/HeroBackground.astro";
 import Icon from "../components/Icon.astro";
+import Card from "../components/Card.astro";
 
 // Page section components
 import ContactCTA from "../components/ContactCTA.astro";
 
 // Image Imports
 import excitedGroup from "../images/group_excited_cropped.jpg";
+import stairs3 from "../images/stairs_3.jpg";
 ---
 
 <BaseLayout>
@@ -45,57 +47,72 @@ import excitedGroup from "../images/group_excited_cropped.jpg";
     </header>
 
     <main class="stack">
-      <section class="section with-background bg-variant">
-        <header class="section-header stack gap-2 lg:gap-4">
-          <h3>We can add glitter to any image</h3>
-          <p>Great for:</p>
-        </header>
-        <div class="gallery">
-          <Grid variant="small">
-            {
-              ["Schools", "Non-Profits", "Community Groups"].map((group) => (
-                <li class="mention-card">
-                  <p>{group}</p>
-                </li>
-              ))
-            }
-          </Grid>
-        </div>
+      <section class="with-background">
+        <Card imgAlign="left">
+          <Image
+            class="vertical-img"
+            slot="left"
+            width={400}
+            src={stairs3}
+            alt="Three people seated on concrete stairs. The person at the top wears a teal tank top glitter printed with a Progress Pride flag in the shape of a heart. The person in the middle wears a black t-shirt glitter printed with a genderqueer flag in the shape of an anatomical heart. The person at the bottom wears a purple tank top glitter printed with a pansexual flag in the shape of an anatomical heart."
+          />
+          <div class="section-text" slot="right">
+            <div class="section-header stack gap-2 lg:gap-4">
+              <h3>Add glitter to any image</h3>
+              <p>
+                Choose one of our existing designs, provide your own, or work
+                with us to develop the perfect design.
+              </p>
+              <p>Great for:</p>
+            </div>
+            <div class="gallery">
+              <Grid variant="small">
+                {
+                  ["Schools", "Youth Groups", "Non-Profits"].map((group) => (
+                    <li class="mention-card">
+                      <p>{group}</p>
+                    </li>
+                  ))
+                }
+              </Grid>
+            </div>
+          </div>
+        </Card>
       </section>
-      <section class="section with-background bg-variant">
-        <header class="section-header stack gap-2 lg:gap-4">
-          <h3>
-            Partner with us on a fundraising campaign to support a great cause
-          </h3>
-          <p>
-            Choose one of our existing designs, provide your own, or work with
-            us to develop the perfect design for your campaign.
-          </p>
-        </header>
-        <div class="gallery">
-          <Grid variant="small">
-            {
-              [
-                "Pink Shirt Day",
-                "Pride",
-                "Trans Day of Visibility",
-                "Solidarity Actions",
-                "National Coming Out Day",
-              ].map((campaign) => (
-                <li class="mention-card">
-                  <p>{campaign}</p>
-                </li>
-              ))
-            }
-          </Grid>
-        </div>
+      <section class="with-background">
+        <Card imgAlign="right">
+          <div class="section-text" slot="left">
+            <div class="section-header stack gap-2 lg:gap-4">
+              <h3>Support a great cause</h3>
+              <p>Partner with us for your next fundraising campaign.</p>
+            </div>
+            <div class="gallery">
+              <Grid variant="small">
+                {
+                  [
+                    "Pink Shirt Day",
+                    "Pride",
+                    "Trans Day of Visibility",
+                    "Solidarity Actions",
+                    "National Coming Out Day",
+                  ].map((campaign) => (
+                    <li class="mention-card">
+                      <p>{campaign}</p>
+                    </li>
+                  ))
+                }
+              </Grid>
+            </div>
+          </div>
+          <Image
+            class="vertical-img"
+            slot="right"
+            src={stairs3}
+            width={400}
+            alt="Three people seated on concrete stairs. The person at the top wears a teal tank top glitter printed with a Progress Pride flag in the shape of a heart. The person in the middle wears a black t-shirt glitter printed with a genderqueer flag in the shape of an anatomical heart. The person at the bottom wears a purple tank top glitter printed with a pansexual flag in the shape of an anatomical heart."
+          />
+        </Card>
       </section>
-      <div class="cta">
-        <CallToAction href="/services">
-          View All
-          <Icon icon="arrow-right" size="1.2em" />
-        </CallToAction>
-      </div>
     </main>
 
     <ContactCTA />
@@ -123,7 +140,7 @@ import excitedGroup from "../images/group_excited_cropped.jpg";
     display: none;
   }
 
-  .hero img {
+  img {
     object-fit: cover;
     object-position: top;
     border-radius: 24px;
@@ -147,15 +164,18 @@ import excitedGroup from "../images/group_excited_cropped.jpg";
       gap: 0.5rem;
     }
 
-    .hero img {
+    img {
       border-radius: 48px;
-      object-fit: cover;
     }
   }
 
   /* ====================================================== */
 
-  .section {
+  .vertical-img {
+    aspect-ratio: 3/4;
+  }
+
+  .section-text {
     display: grid;
     gap: 2rem;
   }
@@ -166,8 +186,6 @@ import excitedGroup from "../images/group_excited_cropped.jpg";
   }
 
   .section-header {
-    justify-self: center;
-    text-align: center;
     max-width: 50ch;
     font-size: var(--text-md);
   }
@@ -177,13 +195,8 @@ import excitedGroup from "../images/group_excited_cropped.jpg";
   }
 
   @media (min-width: 57rem) {
-    .section {
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-areas: "header header header header" "gallery gallery gallery gallery";
-    }
 
     .section-header {
-      grid-area: header;
       font-size: var(--text-lg);
     }
 
@@ -194,10 +207,6 @@ import excitedGroup from "../images/group_excited_cropped.jpg";
     .with-cta .section-header {
       justify-self: flex-start;
       text-align: left;
-    }
-
-    .gallery {
-      grid-area: gallery;
     }
 
     .cta {
@@ -212,7 +221,7 @@ import excitedGroup from "../images/group_excited_cropped.jpg";
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding-block: 32px;
+    padding: 24px;
     background-color: #ffffff;
     border: 1px solid var(--gray-800);
     border-radius: 1.5rem;

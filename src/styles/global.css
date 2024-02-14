@@ -1,6 +1,7 @@
 /* Global variables */
 :root {
---content-width: calc(100% - 32px);
+  --content-width: calc(100% - 32px);
+  --break-point: 57rem;
 
   /* Colors */
   --background-color: hsl(0, 100%, 94%);
@@ -136,13 +137,17 @@ h5 {
   width: 100%;
   max-width: var(--content-width);
   margin-inline: auto;
-  padding-inline: 1.5rem;
+  padding-block: 56px;
 }
 
 .stack {
   display: flex;
   flex-direction: column;
 }
+
+.grid-col-2 {
+  display: grid;
+  }
 
 .gap-2 {
   gap: 0.5rem;
@@ -172,6 +177,16 @@ h5 {
 @media (min-width: 57rem) {
   :root {
     --content-width: 1280px;
+  }
+
+  .grid-col-2.img-left {
+    grid-template-columns: auto 1fr;
+  }
+  .grid-col-2.img-right {
+    grid-template-columns: 1fr auto;
+  }
+  .grid-col-2 {
+    grid-template-areas: "left right";
   }
 
   .lg\:gap-2 {
