@@ -1,35 +1,17 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
+import { getCollection, getEntry } from "astro:content";
 
 import ContactCTA from "../components/ContactCTA.astro";
 import Hero from "../components/Hero.astro";
 import Grid from "../components/Grid.astro";
-import Card from "../components/Card.astro";
+import ProductBlock from "../components/ProductBlock.astro";
 
-// Images
-import classicFlag from "../images/classic-flag.jpg";
-import anat from "../images/anat.jpg";
-import ukraine from "../images/ukraine.jpg";
-import ceasefire from "../images/ceasefire.jpg";
-
-const glitterImages = [
-  { img: anat, alt: "" },
-  {
-    img: classicFlag,
-    alt: "Classic pride flag in the shape of a heart glitter printed on a purple tank top, worn by a black woman.",
-  },
-];
-const screenImages = [
-  {
-    img: ukraine,
-    alt: "The flags of Ukraine and Palestine next to each other with the word solidarity written across them in pink letters, screen printed on a blue t-shirt.",
-  },
-  {
-    img: ceasefire,
-    alt: "The flag of Palestine with the phrase ceasefire now written across it in pink letters, screen printed on a white t-shirt.",
-  },
-];
+const glitterImages = await getCollection("glitter");
+const screenImages = await getCollection("screen");
+const initialGlitterImage = await getEntry("glitter", "g01-anat");
+const initialScreenImage = await getEntry("screen", "s01-ukraine");
 ---
 
 <BaseLayout
@@ -37,190 +19,152 @@ const screenImages = [
   description="Learn about Starr Designs' custom apparel printing services"
 >
   <div class="stack">
-    <main class="stack gap-8">
+    <main class="stack lg:gap-8">
       <div class="hero-wrapper">
         <Hero><span slot="title">Our Services</span></Hero>
       </div>
-      <div class="cards">
+      <div class="cards stack gap-8 lg:gap-20">
         <section>
-          <Card alignTop="right" alignAuto="left">
-            <div class="section-text" slot="top">
-              <div class="section-header stack gap-2 lg:gap-4">
-                <h3>Glitter Printing</h3>
-                <div class="stack gap-2 lg:gap-4">
-                  <p>
-                    We can print any image as a high-quality glitter print.
-                    Choose one of our existing designs, provide your own, or
-                    work with us to develop the perfect design.
-                  </p>
-                  <p>
-                    The glitter is well adhered to the shirt and will not shed
-                    or transfer.
-                  </p>
-                  <p>Youth sizes available.</p>
-                  <p>Minimum order 30 shirts.</p>
-                </div>
+          <ProductBlock
+            alignImg="left"
+            title="Glitter Printing"
+            images={glitterImages}
+            initialImage={initialGlitterImage}
+          >
+            <div class="section-header stack gap-2 lg:gap-4">
+              <div class="stack gap-2 lg:gap-4">
+                <p>
+                  We can print any image as a high-quality glitter print. Choose
+                  one of our existing designs, provide your own, or work with us
+                  to develop the perfect design.
+                </p>
+                <p>
+                  The glitter is well adhered to the shirt and machine washable.
+                  It will not shed or transfer.
+                </p>
+                <p>Youth sizes available.</p>
+                <p>Minimum order 30 shirts.</p>
               </div>
             </div>
-            <Image
-              class="vertical-img"
-              id="glitter-view"
-              slot="bottom"
-              width={400}
-              src={anat}
-              alt=""
-            />
-          </Card>
-          <ul class="thumbs" aria-controls="glitter-view">
-            {
-              glitterImages.map((image) => (
-                <Image
-                  class="glitter-thumb thumb"
-                  src={image.img}
-                  alt={image.alt}
-                  width={400}
-                  data-scr={image.img.src}
-                  data-alt={image.alt}
-                />
-              ))
-            }
-          </ul>
+          </ProductBlock>
         </section>
         <section>
-          <Card alignTop="left" alignAuto="right">
-            <div class="section-text" slot="top">
-              <div class="section-header stack gap-2 lg:gap-4">
-                <h3>Screen Printing</h3>
-                <div class="stack gap-2 lg:gap-4">
-                  <p>
-                    We can also print any image as a traditional screen print,
-                    without glitter.
-                  </p>
-                  <p>Youth sizes available.</p>
-                  <p>Minimum order 30 shirts.</p>
-                </div>
+          <ProductBlock
+            alignImg="right"
+            title="Screen Printing"
+            images={screenImages}
+            initialImage={initialScreenImage}
+          >
+            <div class="section-header stack gap-2 lg:gap-4">
+              <div class="stack gap-2 lg:gap-4">
+                <p>
+                  We can also print any image as a traditional screen print,
+                  without glitter.
+                </p>
+                <p>Youth sizes available.</p>
+                <p>Minimum order 30 shirts.</p>
               </div>
             </div>
-            <Image
-              class="vertical-img"
-              id="screen-view"
-              slot="bottom"
-              src={ukraine}
-              width={400}
-              alt="The flags of Ukraine and Palestine next to each other with the word solidarity written across them, screen printed on a blue t-shirt."
-            />
-          </Card>
-          <ul class="thumbs screen-thumbs" aria-controls="screen-view">
-            {
-              screenImages.map((image) => (
-                <Image
-                  class="screen-thumb thumb"
-                  src={image.img}
-                  alt={image.alt}
-                  width={400}
-                  data-scr={image.img.src}
-                  data-alt={image.alt}
-                />
-              ))
-            }
-          </ul>
+          </ProductBlock>
         </section>
       </div>
     </main>
-    <ContactCTA title="Start your campaign today" quote>
-      <p>
-        Tell us a little about what you're looking for to receive a custom
-        quote.
-      </p>
-    </ContactCTA>
   </div>
+  <ContactCTA title="Start your campaign today" quote>
+    <p>
+      Tell us a little about what you're looking for to receive a custom quote.
+    </p>
+  </ContactCTA>
+</BaseLayout>
 
-  <style>
+<style>
+  .hero-wrapper {
+    padding-block: 32px;
+    background-color: var(--gray-999);
+  }
+
+  .cards {
+    padding-block: 32px;
+  }
+
+  .vertical-img {
+    aspect-ratio: 3/4;
+  }
+
+  .section-text {
+    display: grid;
+    gap: 24px;
+    max-width: 428px;
+    margin-inline: auto;
+  }
+
+  .section-header {
+    max-width: 60ch;
+    font-size: var(--text-md);
+    gap: 16px;
+  }
+
+  .section-header h3 {
+    font-size: var(--text-2xl);
+  }
+
+  img {
+    object-fit: cover;
+    object-position: top;
+    border-radius: 24px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .thumb {
+    width: 100px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+  }
+
+  .thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: var(--content-width);
+    padding: 16px 0px;
+    margin-inline: auto;
+  }
+
+  .screen-thumbs {
+    justify-content: flex-end;
+  }
+
+  @media (min-width: 62rem) {
     .hero-wrapper {
       padding-block: 60px;
-      background-color: var(--gray-999);
     }
-
     .cards {
-      padding-block: 32px;
-    }
-
-    .vertical-img {
-      aspect-ratio: 3/4;
+      padding-block: 60px;
     }
 
     .section-text {
-      display: grid;
-      gap: 24px;
-      max-width: 428px;
-      margin-inline: auto;
+      gap: 48px;
+      max-width: 750px;
     }
-
     .section-header {
-      max-width: 60ch;
-      font-size: var(--text-md);
-      gap: 16px;
+      font-size: var(--text-lg);
+      gap: 32px;
     }
 
     .section-header h3 {
-      font-size: var(--text-2xl);
+      font-size: var(--text-4xl);
     }
 
     img {
-      object-fit: cover;
-      object-position: top;
-      border-radius: 24px;
-      box-shadow: var(--shadow-md);
+      border-radius: 48px;
     }
 
     .thumb {
-      width: 100px;
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
+      border-radius: 8px;
     }
 
     .thumbs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      max-width: var(--content-width);
-      padding: 16px 0px;
-      margin-inline: auto;
+      padding: 16px 32px;
     }
-
-    .screen-thumbs {
-      justify-content: flex-end;
-    }
-
-    @media (min-width: 62rem) {
-      .cards {
-        padding-block: 60px;
-      }
-
-      .section-text {
-        gap: 48px;
-        max-width: 750px;
-      }
-      .section-header {
-        font-size: var(--text-lg);
-        gap: 32px;
-      }
-
-      .section-header h3 {
-        font-size: var(--text-4xl);
-      }
-
-      img {
-        border-radius: 48px;
-      }
-
-      .thumb {
-        border-radius: 8px;
-      }
-
-      .thumbs {
-        padding: 16px 32px;
-      }
-    }
-  </style>
-</BaseLayout>
+  }
+</style>
