@@ -6,6 +6,7 @@ const glitterCollection = defineCollection({
     designName: z.string(),
     image: image(),
     description: z.string(),
+    coverPos: z.enum(["top", "center", "bottom"]).optional(),
   })
 })
 const screenCollection = defineCollection({
@@ -14,6 +15,7 @@ const screenCollection = defineCollection({
     designName: z.string(),
     image: image(),
     description: z.string(),
+    coverPos: z.enum(["top", "center", "bottom"]).optional(),
   })
 })
 
