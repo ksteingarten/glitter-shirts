@@ -1,11 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { Image } from "astro:assets";
 import { getCollection, getEntry } from "astro:content";
 
 import ContactCTA from "../components/ContactCTA.astro";
 import Hero from "../components/Hero.astro";
-import Grid from "../components/Grid.astro";
 import ProductBlock from "../components/ProductBlock.astro";
 
 const glitterImages = await getCollection("glitter");

@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+
 // Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
 import BaseLayout from "../layouts/BaseLayout.astro";
 
@@ -8,16 +9,17 @@ import CallToAction from "../components/CallToAction.astro";
 import Grid from "../components/Grid.astro";
 import Hero from "../components/Hero.astro";
 import HeroBackground from "../components/HeroBackground.astro";
-import Icon from "../components/Icon.astro";
 import Card from "../components/Card.astro";
-
-// Page section components
 import ContactCTA from "../components/ContactCTA.astro";
 
 // Image Imports
 import excitedGroup from "../images/group_excited_cropped.jpg";
 import stairs3 from "../images/stairs_3.jpg";
+import stairsGroup from "../images/stairs_group.jpg";
 import qChoir from "../images/qchoirshirts.jpg";
+import progressHeart from "../images/progress-heart-cropped.jpg";
+import threeCircles from "../images/trio-cropped.jpg";
+import anatRainbow from "../images/anat-rainbow-cropped.jpg";
 ---
 
 <BaseLayout>
@@ -44,30 +46,99 @@ import qChoir from "../images/qchoirshirts.jpg";
       </div>
     </header>
 
-    <main class="stack gap-10 lg:gap-15">
-      <section>
+    <main class="stack">
+      <div>
+        <Card alignAuto="left" alignTop="right">
+          <div class="section-text" slot="top">
+            <div class="section-header stack gap-2 lg:gap-4">
+              <h2>
+                Custom designs and local printing for non-profits, schools, and
+                organizations seeking to raise visibility with a sparkle.
+              </h2>
+              <p>
+                Starr Designs is based in Vancouver, BC, on the unceded land of
+                the Squamish, Musqueam, & Tsleil-Waututh nations.
+              </p>
+            </div>
+          </div>
+          <Image
+            class="vertical-img"
+            slot="bottom"
+            width={400}
+            src={stairsGroup}
+            alt="Five people seated in tree rows on concrete stairs. Top row:  An asian woman in a teal tank top glitter printed with a Progress Pride flag in the shape of a heart and a black woman in a purple tank top glitter printed with a pansexual flag in the shape of an anatomical heart. Middle row: A white person in a black t-shirt glitter printed with a genderqueer flag in the shape of an anatomical heart. Bottom row: Two white men both in black t-shirts glitter printed with a circular image of technicolor clouds with a blue butterfly in the center."
+          />
+        </Card>
+      </div>
+      <section class="pop-background">
+        <div class="small-cards wrapper gap-8">
+          <section class="stack gap-2 lg:gap-4">
+            <Image
+              class="small-card-image"
+              width={220}
+              src={anatRainbow}
+              alt="Close up of an anatomical heart overlayed with a rainbow gradient glitter printed on a black heathered t-shirt."
+            />
+            <h4>Get Peace of Mind</h4>
+            <div class="stack gap-2 lg:gap-4">
+              <p>
+                Our wearable glitter is child-safe, durable, and won't transfer
+                or shed.
+              </p>
+              <p>
+                It's machine washable and can go in the washer and dryer with
+                your regular load.
+              </p>
+            </div>
+          </section>
+          <section class="stack gap-2 lg:gap-4">
+            <Image
+              class="small-card-image"
+              width={220}
+              src={threeCircles}
+              alt="Close up of three circular images arranged in a slightly upward angling line, printed across a black t-shirt. The left and right images show different variations of rainbows over mountain tops, while the middle image show a rear-view of a seated black cat in front of a multicolored nebula"
+            />
+            <h4>Glitterize Anything</h4>
+            <div class="stack gap-2 lg:gap-4">
+              <p>We can add glitter to any image.</p>
+              <p>
+                Choose one of our existing designs, provide your own, or work
+                with us to develop the perfect design.
+              </p>
+            </div>
+          </section>
+          <section class="stack gap-2 lg:gap-4">
+            <Image
+              class="small-card-image"
+              width={220}
+              src={progressHeart}
+              alt="Close up of a Progress Pride flag in the shape of a heart printed on a black t-shirt."
+            />
+            <h4>Buy Local</h4>
+            <div class="stack gap-2 lg:gap-4">
+              <p>Know where your printing is happening.</p>
+              <p>
+                We are committed to working with local crafts people in the
+                Lower Mainland and paying a living wage.
+              </p>
+            </div>
+          </section>
+        </div>
+      </section>
+      <section class="white-background">
         <Card alignTop="left" alignAuto="right">
           <div class="section-text" slot="top">
             <div class="section-header stack gap-2 lg:gap-4">
-              <h3>Add glitter to any image</h3>
-              <div class="stack gap-2 lg:gap-4">
+              <div class="testimonial stack gap-2 lg:gap-4">
                 <p>
-                  Choose one of our existing designs, provide your own, or work
-                  with us to develop the perfect design.
+                  "Joshua was so fabulous to work with, he was flexible to our
+                  changing needs and delivered beautiful shirts on a short
+                  deadline. The shirts are excellent quality, and held up after
+                  multiple wash and wears. We would be happy to work with Joshua
+                  again!"
                 </p>
-                <p>Great for:</p>
+                <p class="attribution">- Goldbard, Q Choir</p>
               </div>
-            </div>
-            <div class="gallery">
-              <Grid variant="small">
-                {
-                  ["Schools", "Youth Groups", "Non-Profits"].map((group) => (
-                    <li class="mention-card">
-                      <p>{group}</p>
-                    </li>
-                  ))
-                }
-              </Grid>
             </div>
           </div>
           <Image
@@ -93,8 +164,8 @@ import qChoir from "../images/qchoirshirts.jpg";
                     "Pink Shirt Day",
                     "Pride",
                     "Trans Day of Visibility",
-                    "Solidarity Actions",
-                    "...and many more!",
+                    "Day of Pink",
+                    "Custom Designs",
                   ].map((campaign) => (
                     <li class="mention-card">
                       <p>{campaign}</p>
@@ -165,8 +236,8 @@ import qChoir from "../images/qchoirshirts.jpg";
 
   /* ====================================================== */
 
-  main {
-    padding-block: 32px;
+  main > * {
+    padding-block: 40px;
   }
 
   .vertical-img {
@@ -176,13 +247,26 @@ import qChoir from "../images/qchoirshirts.jpg";
   .section-text {
     display: grid;
     gap: 24px;
-    max-width: 428px;
+    /* max-width: 500px; */
     margin-inline: auto;
   }
 
-  .with-background {
-    position: relative;
-    background-color: var(--background-color);
+  h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .testimonial {
+    font-size: var(--text-lg);
+  }
+  .attribution {
+    text-align: end;
+  }
+
+  .white-background {
+    background-color: var(--gray-999);
+  }
+  .pop-background {
+    background-color: var(--pop-color);
   }
 
   .section-header {
@@ -196,7 +280,7 @@ import qChoir from "../images/qchoirshirts.jpg";
   }
 
   @media (min-width: 62rem) {
-    main {
+    main > * {
       padding-block: 60px;
     }
 
@@ -212,8 +296,53 @@ import qChoir from "../images/qchoirshirts.jpg";
     .section-header h3 {
       font-size: var(--text-4xl);
     }
+    h2 {
+      font-size: var(--text-4xl);
+    }
+    .testimonial {
+      font-size: var(--text-xl);
+    }
   }
 
+  /* ====================================================== */
+
+  .small-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .small-cards section {
+    max-width: 500px;
+    border-radius: 64px;
+    /* border: 8px solid var(--pop-color); */
+    padding: 24px 24px 32px;
+    font-size: var(--text-md);
+    background-color: var(--gray-999);
+  }
+
+  .small-cards h4 {
+    font-size: var(--text-xl);
+    color: var(--pop-color);
+  }
+
+  .small-card-image {
+    border-radius: 48px;
+    align-self: center;
+    margin-block-end: 8px;
+  }
+
+  @media (min-width: 62rem) {
+    .small-cards {
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: stretch;
+    }
+    .small-cards section {
+      max-width: 360px;
+      border-radius: 64px;
+    }
+  }
   /* ====================================================== */
 
   .mention-card {
