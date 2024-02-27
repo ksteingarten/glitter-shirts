@@ -89,20 +89,27 @@ const {
 
       const thumbs = Array.from(this.querySelectorAll(".thumb-button"));
       const mainImage = this.querySelector(".main-image");
-      const name = this.querySelector(".design-name");
+      const name = this.querySelector(".design-name") as HTMLSpanElement;
 
       thumbs.forEach((thumb) => {
         thumb.addEventListener("click", (event) => {
-          const button = event.currentTarget;
-          if (button.ariaCurrent === "true") {
-            return;
+          try {
+            const button = event.currentTarget as HTMLButtonElement;
+            if (button.ariaCurrent === "true") {
+              return;
+            }
+            if (!button.dataset.src || !button.dataset.alt || !name) {
+              throw new Error("Unable to find thumbnail properties.");
+            }
+            mainImage?.setAttribute("src", button.dataset.src);
+            mainImage?.setAttribute("alt", button.dataset.alt);
+            name.innerText = ` ${button.dataset.name}`;
+            const prev = thumbs.find((thumb) => thumb.ariaCurrent === "true");
+            prev?.removeAttribute("aria-current");
+            button.setAttribute("aria-current", "true");
+          } catch (error) {
+            console.error(error);
           }
-          mainImage.setAttribute("src", button.dataset.src);
-          mainImage.setAttribute("alt", button.dataset.alt);
-          name.innerText = ` ${button.dataset.name}`;
-          const prev = thumbs.find((thumb) => thumb.ariaCurrent === "true");
-          prev.removeAttribute("aria-current");
-          button.setAttribute("aria-current", "true");
         });
       });
     }
