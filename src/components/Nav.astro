@@ -5,14 +5,11 @@ import logo from "../images/starr-designs-logo.svg";
 
 /** Main menu items */
 const textLinks: { label: string; href: string }[] = [
-  { label: "Home", href: "/glitter-shirts/" },
-  { label: "Printing Services", href: "/glitter-shirts/services/" },
+  { label: "Home", href: "/" },
+  { label: "Printing Services", href: "/services/" },
 ];
 
-const contactHref =
-  Astro.url.pathname === "/about/"
-    ? "/#contact"
-    : `${Astro.url.pathname}#contact`;
+const contactHref = `${Astro.url.pathname}#contact`;
 ---
 
 <nav id="top">
