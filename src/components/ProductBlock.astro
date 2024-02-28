@@ -34,13 +34,14 @@ const {
     ]}
   >
     <h2>{title}</h2>
-    <Image
-      class="main-image"
-      id="view"
-      src={initialImage.data.image}
-      width={400}
-      alt={initialImage.data.description}
-    />
+    <div class="main-image">
+      <Image
+        id="view"
+        src={initialImage.data.image}
+        width={400}
+        alt={initialImage.data.description}
+      />
+    </div>
     <div class="thumbs-wrapper stack gap-2">
       <p>
         <strong>Design:</strong><span class="design-name"
@@ -88,8 +89,10 @@ const {
       super();
 
       const thumbs = Array.from(this.querySelectorAll(".thumb-button"));
-      const mainImage = this.querySelector(".main-image");
+      const mainImage = this.querySelector(".main-image") as HTMLDivElement;
       const name = this.querySelector(".design-name") as HTMLSpanElement;
+      const loadingState = { loading: false };
+      const controller = new AbortController();
 
       thumbs.forEach((thumb) => {
         thumb.addEventListener("click", (event) => {
@@ -98,15 +101,46 @@ const {
             if (button.ariaCurrent === "true") {
               return;
             }
-            if (!button.dataset.src || !button.dataset.alt || !name) {
-              throw new Error("Unable to find thumbnail properties.");
+            if (!button.dataset.src || !button.dataset.alt) {
+              throw new Error("Unable to find thumbnail source.");
             }
-            mainImage?.setAttribute("src", button.dataset.src);
-            mainImage?.setAttribute("alt", button.dataset.alt);
-            name.innerText = ` ${button.dataset.name}`;
-            const prev = thumbs.find((thumb) => thumb.ariaCurrent === "true");
-            prev?.removeAttribute("aria-current");
-            button.setAttribute("aria-current", "true");
+            if (loadingState.loading) {
+              controller.abort();
+              loadingState.loading = false;
+            }
+            const img = document.createElement("img");
+            img.setAttribute("width", "400");
+            img.setAttribute("height", "600");
+            loadingState.loading = true;
+            img.addEventListener(
+              "load",
+              (e) => {
+                try {
+                  const newImg = e.currentTarget as HTMLImageElement;
+                  if (
+                    !button.dataset.src ||
+                    !button.dataset.alt ||
+                    !name ||
+                    !mainImage
+                  ) {
+                    throw new Error("Unable to find thumbnail properties.");
+                  }
+                  loadingState.loading = false;
+                  mainImage.replaceChildren(newImg);
+                  name.innerText = ` ${button.dataset.name}`;
+                  const prev = thumbs.find(
+                    (thumb) => thumb.ariaCurrent === "true"
+                  );
+                  prev?.removeAttribute("aria-current");
+                  button.setAttribute("aria-current", "true");
+                } catch (error) {
+                  console.error(error);
+                }
+              },
+              { once: true, signal: controller.signal }
+            );
+            img.src = button.dataset.src;
+            img.setAttribute("alt", button.dataset.alt);
           } catch (error) {
             console.error(error);
           }
@@ -137,12 +171,17 @@ const {
   }
 
   .main-image {
-    aspect-ratio: 3/4;
-    width: min(400px, 100%)
+    width: 400px;
+    max-width: 100%;
+    aspect-ratio: 4/5;
     align-self: start;
-    /* justify-self: center; */
-    box-shadow: var(--shadow-md);
+    overflow: hidden;
     border-radius: 24px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .main-image img {
+    min-height: 100%;
   }
 
   img {
@@ -231,8 +270,6 @@ const {
     .thumbs-wrapper {
       grid-area: thumbs;
       align-self: start;
-    }
-    img {
     }
 
     button {
