@@ -1,6 +1,6 @@
 ---
 interface Props {
-  tagline?: string;
+  tagline?: boolean;
   align?: "start" | "center";
 }
 
@@ -10,7 +10,13 @@ const { align = "center", tagline } = Astro.props;
 <div class:list={["hero stack gap-8", align]}>
   <div class="stack gap-4">
     <h1 class="title"><slot name="title" /></h1>
-    {tagline && <p class="tagline">{tagline}</p>}
+    {
+      tagline && (
+        <p class="tagline">
+          <slot name="tagline" />
+        </p>
+      )
+    }
   </div>
   <slot />
 </div>

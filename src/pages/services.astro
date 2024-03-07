@@ -1,15 +1,61 @@
 ---
+// This file is the Printing Services Page.
+
+// Anything inside angle brackets, like <tag>, is a tag that tells the code what the shape of the content should be.
+// Text content will typically be between tags, like <tag>Text</tag>,
+// either all on one line or with long text on it's own line(s) with tags in the lines above and below it.
+// Most text content can be updated without worry by changing only the text itself,
+// just don't change anything inside the tags' angle brackets.
+// The exception is that certain tags for components take a title inside the tag's brackets.
+// These will always be inside quotation marks, like <Tag title="Text of the Title"> or
+// <Tag
+// title="Text of the Title"
+// >
+// and you can the text of the title to whatever you want.
+
+// Be aware that if you make a given bit of text much shorter or longer
+// the layout will do it's best to accommodate it, but it may look unbalanced.
+
+// Do not change anything inside the <script> </script> or <style> </style> tag blocks at the end of the file.
+
+// Layout and Astro imports — provides basic page elements common to all pages and Astro helpers.
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection, getEntry } from "astro:content";
 
-import ContactCTA from "../components/ContactCTA.astro";
+// Component Imports - These are the building blocks for the different section of the the page.
+import ContactFormBlock from "../components/ContactFormBlock.astro";
 import Hero from "../components/Hero.astro";
 import ProductBlock from "../components/ProductBlock.astro";
 
+// Images - The images for this page are organized into content collections.
+// This allows you to easily add new thumbnails to each product block automatically
+// by updating the files in content/glitter and content/matte folders.
+// To do so, add a new image file to the appropriate folder, ideally no larger than 800 x 1200 pixels,
+// then copy one of the existing .md files and rename the copied file to match the new image file.
+// Each .md file begins with either g or m, a two digit number that determines the order of the thumbnails, and a hyphen.
+// To put the new thumbnail at the end of the list, simply give it the next unused number.
+// To put the new thumbnail earlier or to rearrange the thumbnails
+// you would need to update the numbers in all the file names accordingly.
+// (If you update the numbers of the current 01 images, you will also need to update their file names in the Initial Images below.)
+// So a file for a glitter print should be named something like g13-new-image.md.
+// Then open the .md file and update the fields within to match the new image.
+// All fields need to have the content in quotation marks, like field: "content", and the file must start and end with ---
+// The designName field will show on the page when that image is the selected picture.
+// The image field should be the path to the image file, like "./new-image.jpg"
+// The description field will be used for the image's alt text.
+// Alt text is important for accessibility for folks who use screen readers and will also show if an image fails.
+// There is also an optional coverPos field, this determines how the image gets cropped for the thumbnail.
+// If you don't include coverPos it will default to lining up the top of the thumbnail circle with the top of the image.
+// This default is fine in most cases, but if the important part of the image is towards the bottom
+// you can use coverPos: "center" or coverPos: "bottom" to center the circle on the center or bottom of the image.
 const glitterImages = await getCollection("glitter");
 const matteImages = await getCollection("matte");
+
+// Initial Images - If you want to change which image starts as the selected image,
+// update the file name in the last set of quotation marks.
+// Remember to update these if you change the file names of the current initial images.
 const initialGlitterImage = await getEntry("glitter", "g01-anat");
-const initialMatteImage = await getEntry("matte", "s01-ukraine");
+const initialMatteImage = await getEntry("matte", "m01-ukraine");
 ---
 
 <BaseLayout
@@ -68,11 +114,11 @@ const initialMatteImage = await getEntry("matte", "s01-ukraine");
       </div>
     </main>
   </div>
-  <ContactCTA title="Start your campaign today" quote>
+  <ContactFormBlock title="Start your campaign today" quote>
     <p>
       Tell us a little about what you're looking for to receive a custom quote.
     </p>
-  </ContactCTA>
+  </ContactFormBlock>
 </BaseLayout>
 
 <style>

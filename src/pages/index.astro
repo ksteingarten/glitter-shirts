@@ -1,18 +1,45 @@
 ---
-import { Image } from "astro:assets";
+// This file is the Home Page.
 
-// Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
+// Anything inside angle brackets, like <tag>, is a tag that tells the code what the shape of the content should be.
+// Text content will typically be between tags, like <tag>Text</tag>,
+// either all on one line or with long text on it's own line(s) with tags in the lines above and below it.
+// Most text content can be updated without worry by changing only the text itself,
+// just don't change anything inside the tags' angle brackets.
+// The exception is that certain tags for components take a title inside the tag's brackets.
+// These will always be inside quotation marks, like <Tag title="Text of the Title"> or
+// <Tag
+// title="Text of the Title"
+// >
+// and you can the text of the title to whatever you want.
+
+// Be aware that if you make a given bit of text much shorter or longer
+// the layout will do it's best to accommodate it, but it may look unbalanced.
+
+// Do not change anything inside the <style> </style> tag block at the end of the file.
+
+// Layout and Astro imports — provides basic page elements common to all pages and Astro helpers.
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-// Component Imports
+// Component Imports - These are the building blocks for the different section of the the page.
 import CallToAction from "../components/CallToAction.astro";
 import Grid from "../components/Grid.astro";
 import Hero from "../components/Hero.astro";
 import HeroBackground from "../components/HeroBackground.astro";
 import Card from "../components/Card.astro";
-import ContactCTA from "../components/ContactCTA.astro";
+import ContactFormBlock from "../components/ContactFormBlock.astro";
 
-// Image Imports
+// Image Imports - These bring the image files in the images folder into the page.
+// If you want to replace an image, choose one that is has the same layout (either vertical or horizontal),
+// ideally reduce the the image size to no bigger than 800 by 1200 pixels,
+// and put it in the images folder.
+// Then copy one of the lines here and paste on a new line,
+// put a new name for the new picture after "import",
+// and replace the name of the original file with the name of the new file inside the quotation marks.
+// Then find the <Image> tag in the page that has src={oldPictureName} and change it to src={newPictureName},
+// and update the alt="A description of the image" field to describe the new image.
+// Alt text is important for accessibility for folks who use screen readers and will also show if an image fails.
 import excitedGroup from "../images/group_excited_cropped.jpg";
 import stairs3 from "../images/stairs_3.jpg";
 import stairsGroup from "../images/stairs_group.jpg";
@@ -28,11 +55,12 @@ import anatRainbow from "../images/anat-rainbow-cropped.jpg";
       <HeroBackground />
       <div class="hero-wrapper">
         <div class="wrapper hero-inner-wrapper">
-          <Hero
-            tagline="We specialize in bulk custom glitter and matte colour apparel printing."
-            align="start"
-          >
+          <Hero tagline align="start">
             <span slot="title"><nobr>T-shirts</nobr> that sparkle</span>
+            <span slot="tagline"
+              >We specialize in bulk custom glitter and matte colour apparel
+              printing.</span
+            >
             <div class="cta">
               <CallToAction href="/#contact">Get A Quote</CallToAction>
             </div>
@@ -40,7 +68,7 @@ import anatRainbow from "../images/anat-rainbow-cropped.jpg";
           <Image
             src={excitedGroup}
             width={650}
-            alt="A group of five people wearing t-shirts looking at each other excitedly. Each person's t-shirt has a glitter design on it: the two on the left have the Progress Pride flag in a heart on the upper left chest, the two in the middle have vertical rainbow stripes in a heart in the center of the chest, and the one on the right has a classic pride flag in a heart in the center of the chest"
+            alt="A group of five people wearing t-shirts looking at each other excitedly. Each person's t-shirt has a glitter design on it: the two on the left have the Progress Pride flag in a heart on the upper left chest, the two in the middle have vertical rainbow stripes in a heart in the center of the chest, and the one on the right has a classic pride flag in a heart in the center of the chest."
           />
         </div>
       </div>
@@ -186,11 +214,11 @@ import anatRainbow from "../images/anat-rainbow-cropped.jpg";
       </section>
     </main>
 
-    <ContactCTA>
+    <ContactFormBlock>
       <p>Have a question?</p>
       <p>Interested in a quote?</p>
       <p>We would love to hear from you!</p>
-    </ContactCTA>
+    </ContactFormBlock>
   </div>
 </BaseLayout>
 
