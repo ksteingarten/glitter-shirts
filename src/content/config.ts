@@ -9,7 +9,7 @@ const glitterCollection = defineCollection({
     coverPos: z.enum(["top", "center", "bottom"]).optional(),
   })
 })
-const screenCollection = defineCollection({
+const matteCollection = defineCollection({
   type: "content",
   schema: ({image}) => z.object({
     designName: z.string(),
@@ -21,5 +21,5 @@ const screenCollection = defineCollection({
 
 export const collections = {
   "glitter": glitterCollection,
-  "screen": screenCollection,
+  "matte": matteCollection,
 }

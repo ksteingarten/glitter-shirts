@@ -7,9 +7,9 @@ import Hero from "../components/Hero.astro";
 import ProductBlock from "../components/ProductBlock.astro";
 
 const glitterImages = await getCollection("glitter");
-const screenImages = await getCollection("screen");
+const matteImages = await getCollection("matte");
 const initialGlitterImage = await getEntry("glitter", "g01-anat");
-const initialScreenImage = await getEntry("screen", "s01-ukraine");
+const initialMatteImage = await getEntry("matte", "s01-ukraine");
 ---
 
 <BaseLayout
@@ -49,15 +49,15 @@ const initialScreenImage = await getEntry("screen", "s01-ukraine");
         <section>
           <ProductBlock
             alignImg="right"
-            title="Screen Printing"
-            images={screenImages}
-            initialImage={initialScreenImage}
+            title="Matte Colour Printing"
+            images={matteImages}
+            initialImage={initialMatteImage}
           >
             <div class="section-header stack gap-2 lg:gap-4">
               <div class="stack gap-2 lg:gap-4">
                 <p>
-                  We can also print any image as a traditional screen print,
-                  without glitter.
+                  We can also print any image as a traditional matte colour
+                  print, without glitter.
                 </p>
                 <p>Youth sizes available.</p>
                 <p>Minimum order 30 shirts.</p>
